@@ -1,13 +1,15 @@
 package solstice.bootcamp.stocksapi.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import solstice.bootcamp.stocksapi.model.AggregateData;
 import solstice.bootcamp.stocksapi.model.StockData;
 import solstice.bootcamp.stocksapi.repository.StockDataRepository;
 import solstice.bootcamp.stocksapi.service.StockDataService;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -26,10 +28,17 @@ public class StockDataController {
         try {
             return stockDataRepository.save(stockDataService.mapJSON());
         } catch (IOException e) {
-            System.out.println("IO ERROR");
             e.printStackTrace();
             return null;
         }
     }
 
+    @GetMapping("/{symbol}/{date}")
+    public AggregateData getAggregateData(
+            @PathVariable("symbol") String symbol, @PathVariable("date") String date) {
+
+        AggregateData data = stockDataRepository.compileData(symbol, date);
+        System.out.println(data.getHighestPrice());
+        return data;
+    }
 }

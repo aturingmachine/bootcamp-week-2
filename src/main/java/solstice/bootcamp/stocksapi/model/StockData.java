@@ -17,6 +17,13 @@ public class StockData {
     private int volume;
     private Timestamp date;
 
+    public StockData(int id, String symbol, float price, int volume, Timestamp date) {
+        this.id = id;
+        this.symbol = symbol;
+        this.price = price;
+        this.volume = volume;
+        this.date = date;
+    }
 
     public StockData(String symbol, float price, int volume, Timestamp date) {
         this.symbol = symbol;
