@@ -24,16 +24,21 @@ public class StockDataRepository {
     private final RowMapper<AggregateData> aggregateDataRowMapper = (ResultSet rs, int row) -> new AggregateData(
             rs.getFloat(1),
             rs.getFloat(2),
-            rs.getInt(3)
+            rs.getInt(3),
+            rs.getFloat(4)
             );
 
     // Query Strings to be used
     private final String INSERT = "INSERT INTO stocks (symbol, price, volume, date) values(?, ?, ?, ?)";
 
-    private final String COMPILE_DATE= "SELECT MAX(price), MIN(price), SUM(volume) from stocks " +
+    private final String COMPILE_DATE= "SELECT MAX(price), MIN(price), SUM(volume), " +
+            "(select price from stocks where symbol = '[SYMBOL]'" +
+            " and date = (select max(date) from stocks where date like '[DATE]%')) as CLOSE_PRICE from stocks " +
             "where symbol = '[SYMBOL]' and date like '[DATE]%'";
 
-    private final String COMPILE_MONTH = "SELECT MAX(price), MIN(price), SUM(volume) from stocks " +
+    private final String COMPILE_MONTH = "SELECT MAX(price), MIN(price), SUM(volume)," +
+            " (select price from stocks where symbol = '[SYMBOL]'" +
+            " and date = (select max(date) from stocks where date like '%-[DATE]-%')) as CLOSE_PRICE from stocks " +
             "where symbol = '[SYMBOL]' and date like '%-[DATE]-%'";
 
 
@@ -43,15 +48,12 @@ public class StockDataRepository {
 
     public List<StockData> save(List<StockData> stockData) {
 
-        stockData.forEach(datum -> {
-            template.update(INSERT,
-                    datum.getSymbol(),
-                    datum.getPrice(),
-                    datum.getVolume(),
-                    datum.getDate()
-            );
-
-        });
+        stockData.forEach(datum -> template.update(INSERT,
+                datum.getSymbol(),
+                datum.getPrice(),
+                datum.getVolume(),
+                datum.getDate()
+        ));
 
         return stockData;
 

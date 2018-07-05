@@ -43,12 +43,16 @@ public class StockDataController {
         if (type.equals("date")) {
             data = stockDataRepository.compileDataDate(symbol, date);
         } else if (type.equals("month")) {
+            if (Integer.parseInt(date) > 12 || Integer.parseInt(date) < 1) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
             data = stockDataRepository.compileDataMonth(symbol, date);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         data.setType(type);
+        data.setSymbol(symbol);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }

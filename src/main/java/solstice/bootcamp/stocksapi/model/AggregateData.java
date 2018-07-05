@@ -6,12 +6,15 @@ public class AggregateData {
     private float highestPrice;
     private float lowestPrice;
     private int totalVolume;
+    private float closePrice;
     private String type;
+    private String symbol;
 
-    public AggregateData(float highestPrice, float lowestPrice, int totalVolume) {
+    public AggregateData(float highestPrice, float lowestPrice, int totalVolume, float closePrice) {
         this.highestPrice = highestPrice;
         this.lowestPrice = lowestPrice;
         this.totalVolume = totalVolume;
+        this.closePrice = closePrice;
     }
 
     public AggregateData() {}
@@ -46,5 +49,21 @@ public class AggregateData {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public float getClosePrice() {
+        return closePrice;
+    }
+
+    public void setClosePrice(float closePrice) {
+        this.closePrice = closePrice;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }
