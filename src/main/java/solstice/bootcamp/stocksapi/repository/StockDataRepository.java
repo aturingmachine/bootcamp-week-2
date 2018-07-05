@@ -1,6 +1,5 @@
 package solstice.bootcamp.stocksapi.repository;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -8,7 +7,6 @@ import solstice.bootcamp.stocksapi.model.AggregateData;
 import solstice.bootcamp.stocksapi.model.StockData;
 
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -27,13 +25,16 @@ public class StockDataRepository {
             rs.getFloat(1),
             rs.getFloat(2),
             rs.getInt(3)
-    );
+            );
 
     // Query Strings to be used
     private final String INSERT = "INSERT INTO stocks (symbol, price, volume, date) values(?, ?, ?, ?)";
 
-    private final String COMPILE = "SELECT MAX(price), MIN(price), SUM(volume) from stocks " +
+    private final String COMPILE_DATE= "SELECT MAX(price), MIN(price), SUM(volume) from stocks " +
             "where symbol = '[SYMBOL]' and date like '[DATE]%'";
+
+    private final String COMPILE_MONTH = "SELECT MAX(price), MIN(price), SUM(volume) from stocks " +
+            "where symbol = '[SYMBOL]' and date like '%-[DATE]-%'";
 
 
     public StockDataRepository(JdbcTemplate template) {
@@ -56,11 +57,21 @@ public class StockDataRepository {
 
     }
 
-    public AggregateData compileData(String symbol, String date) {
-        String queryString = COMPILE.replace("[SYMBOL]", symbol).replace("[DATE]", date);
+    public AggregateData compileDataDate(String symbol, String date) {
+        String queryString = COMPILE_DATE.replace("[SYMBOL]", symbol).replace("[DATE]", date);
 
         return template.queryForObject(queryString, aggregateDataRowMapper);
 
+    }
+
+    public AggregateData compileDataMonth(String symbol, String date) {
+        if (date.length() != 2) {
+            date = "0" + date;
+        }
+        String queryString = COMPILE_MONTH.replace("[SYMBOL]", symbol).replace("[DATE]", date);
+        System.out.println(queryString);
+
+        return template.queryForObject(queryString, aggregateDataRowMapper);
     }
 
 

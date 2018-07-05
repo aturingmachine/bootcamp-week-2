@@ -6,6 +6,7 @@ public class AggregateData {
     private float highestPrice;
     private float lowestPrice;
     private int totalVolume;
+    private String type;
 
     public AggregateData(float highestPrice, float lowestPrice, int totalVolume) {
         this.highestPrice = highestPrice;
@@ -37,5 +38,13 @@ public class AggregateData {
 
     public void setTotalVolume(int totalVolume) {
         this.totalVolume = totalVolume;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

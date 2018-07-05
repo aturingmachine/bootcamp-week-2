@@ -1,5 +1,7 @@
 package solstice.bootcamp.stocksapi.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import solstice.bootcamp.stocksapi.model.AggregateData;
 import solstice.bootcamp.stocksapi.model.StockData;
@@ -7,9 +9,6 @@ import solstice.bootcamp.stocksapi.repository.StockDataRepository;
 import solstice.bootcamp.stocksapi.service.StockDataService;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -33,12 +32,23 @@ public class StockDataController {
         }
     }
 
-    @GetMapping("/{symbol}/{date}")
-    public AggregateData getAggregateData(
-            @PathVariable("symbol") String symbol, @PathVariable("date") String date) {
+    @GetMapping("/{symbol}/{date}/{type}")
+    public ResponseEntity<AggregateData> getAggregateData(
+            @PathVariable("symbol") String symbol,
+            @PathVariable("date") String date,
+            @PathVariable("type") String type) {
 
-        AggregateData data = stockDataRepository.compileData(symbol, date);
-        System.out.println(data.getHighestPrice());
-        return data;
+        AggregateData data;
+
+        if (type.equals("date")) {
+            data = stockDataRepository.compileDataDate(symbol, date);
+        } else if (type.equals("month")) {
+            data = stockDataRepository.compileDataMonth(symbol, date);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        data.setType(type);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
