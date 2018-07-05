@@ -53,6 +53,7 @@ public class StockDataController {
 
         data.setType(type);
         data.setSymbol(symbol);
+        data.setDateRequested(date);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }

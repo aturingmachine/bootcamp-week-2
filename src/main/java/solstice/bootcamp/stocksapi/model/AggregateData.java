@@ -9,6 +9,7 @@ public class AggregateData {
     private float closePrice;
     private String type;
     private String symbol;
+    private String dateRequested;
 
     public AggregateData(float highestPrice, float lowestPrice, int totalVolume, float closePrice) {
         this.highestPrice = highestPrice;
@@ -65,5 +66,13 @@ public class AggregateData {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public String getDateRequested() {
+        return dateRequested;
+    }
+
+    public void setDateRequested(String dateRequested) {
+        this.dateRequested = dateRequested;
     }
 }
