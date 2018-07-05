@@ -67,11 +67,11 @@ public class StockDataRepository {
     }
 
     public AggregateData compileDataMonth(String symbol, String date) {
+        //If the user passed us a single character make sure the query will work
         if (date.length() != 2) {
             date = "0" + date;
         }
         String queryString = COMPILE_MONTH.replace("[SYMBOL]", symbol).replace("[DATE]", date);
-        System.out.println(queryString);
 
         return template.queryForObject(queryString, aggregateDataRowMapper);
     }

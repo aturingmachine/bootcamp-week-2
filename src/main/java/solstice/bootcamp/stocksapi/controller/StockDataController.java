@@ -23,12 +23,11 @@ public class StockDataController {
     }
 
     @PostMapping("/load")
-    public List<StockData> load() {
+    public ResponseEntity load() {
         try {
-            return stockDataRepository.save(stockDataService.mapJSON());
+            return new ResponseEntity<>(stockDataRepository.save(stockDataService.mapJSON()), HttpStatus.CREATED);
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
