@@ -2,6 +2,7 @@ package solstice.bootcamp.stocksapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,10 +32,12 @@ public class Company {
   public Company() {
   }
 
+  @JsonProperty("id")
   public int getId() {
     return id;
   }
 
+  @JsonIgnore
   public void setId(int id) {
     this.id = id;
   }

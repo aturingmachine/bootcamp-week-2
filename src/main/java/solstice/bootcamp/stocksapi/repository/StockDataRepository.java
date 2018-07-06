@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import solstice.bootcamp.stocksapi.model.AggregateData;
 import solstice.bootcamp.stocksapi.model.Company;
 import solstice.bootcamp.stocksapi.model.StockData;
-import solstice.bootcamp.stocksapi.model.StockDataPresenter;
 import solstice.bootcamp.stocksapi.service.StockDataService;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class StockDataRepository {
   private StockDataService stockDataService;
   private CompanyRepository companyRepository;
 
-  private final RowMapper<StockDataPresenter> stockDataRowMapper = (ResultSet rs, int row) -> new StockDataPresenter(
+  private final RowMapper<StockData> stockDataRowMapper = (ResultSet rs, int row) -> new StockData(
       rs.getInt("id"),
       companyRepository.getCompanyById(rs.getInt("companyId")),
       rs.getFloat("price"),
@@ -62,7 +61,7 @@ public class StockDataRepository {
     this.companyRepository = companyRepository;
   }
 
-  public List<StockDataPresenter> save() throws IOException {
+  public List<StockData> save() throws IOException {
 
     List<StockData> stockData = stockDataService.mapJSON();
     HashSet<Company> companySet = stockDataService.getCompanies();
@@ -81,7 +80,7 @@ public class StockDataRepository {
 
   }
 
-  public List<StockDataPresenter> getAll() {
+  public List<StockData> getAll() {
     return template.query(GET_ALL, stockDataRowMapper);
   }
 

@@ -1,6 +1,7 @@
 package solstice.bootcamp.stocksapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,22 +17,23 @@ public class StockData {
   private int id;
   @JsonIgnore
   @ManyToOne
-  private Company companyId;
+  private Company company;
+  @JsonIgnore
   private String symbol;
   private float price;
   private int volume;
   private Timestamp date;
 
-  public StockData(int id, Company companyId, float price, int volume, Timestamp date) {
+  public StockData(int id, Company company, float price, int volume, Timestamp date) {
     this.id = id;
-    this.companyId = companyId;
+    this.company = company;
     this.price = price;
     this.volume = volume;
     this.date = date;
   }
 
-  public StockData(Company companyId, float price, int volume, Timestamp date) {
-    this.companyId = companyId;
+  public StockData(Company company, float price, int volume, Timestamp date) {
+    this.company = company;
     this.price = price;
     this.volume = volume;
     this.date = date;
@@ -47,20 +49,24 @@ public class StockData {
   public StockData() {
   }
 
+  @JsonProperty("id")
   public int getId() {
     return id;
   }
 
+  @JsonIgnore
   public void setId(int id) {
     this.id = id;
   }
 
+  @JsonProperty("company")
   public Company getCompanyId() {
-    return companyId;
+    return company;
   }
 
-  public void setCompanyId(Company companyId) {
-    this.companyId = companyId;
+  @JsonIgnore
+  public void setCompanyId(Company company) {
+    this.company = company;
   }
 
   public float getPrice() {
@@ -87,10 +93,12 @@ public class StockData {
     this.date = date;
   }
 
+  @JsonIgnore
   public String getSymbol() {
     return symbol;
   }
 
+  @JsonProperty("symbol")
   public void setSymbol(String symbol) {
     this.symbol = symbol;
   }
