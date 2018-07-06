@@ -1,5 +1,6 @@
 package solstice.bootcamp.stocksapi.repository;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -80,7 +81,7 @@ public class StockDataRepository {
 
   }
 
-  public List<StockData> getAll() {
+  public List<StockData> getAll() throws DataAccessException {
     return template.query(GET_ALL, stockDataRowMapper);
   }
 

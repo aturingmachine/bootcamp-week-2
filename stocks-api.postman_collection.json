@@ -190,12 +190,52 @@
 			"response": []
 		},
 		{
+			"name": "GET stocks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18ad36e9-5147-4ed5-9213-adfc0c84c51f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Request Successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Data Is JSON\", function () {",
+							"    pm.response.to.not.be.error; ",
+							"    pm.response.to.have.jsonBody(\"\"); ",
+							"    pm.response.to.not.have.jsonBody(\"error\");  ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/stocks",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks"
+					]
+				},
+				"description": "Return all stocks in their beatiful formatting"
+			},
+			"response": []
+		},
+		{
 			"name": "POST DB Load",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "86a03280-1190-4574-8a31-e70e5ae96464",
+						"id": "fc954d4a-5f37-4a87-9d43-1d398f534e78",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Data Load Successful\", function () {",
@@ -206,9 +246,7 @@
 							"    pm.response.to.not.be.error; ",
 							"    pm.response.to.have.jsonBody(\"\"); ",
 							"    pm.response.to.not.have.jsonBody(\"error\");  ",
-							"});",
-							"",
-							""
+							"});"
 						]
 					}
 				}

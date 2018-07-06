@@ -1,6 +1,7 @@
 package solstice.bootcamp.stocksapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,16 @@ public class StockDataController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
     }
   }
+
+  @GetMapping("")
+  public ResponseEntity getAll() {
+    try {
+      return new ResponseEntity<>(stockDataRepository.getAll(), HttpStatus.OK);
+    } catch (DataAccessException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());
+    }
+  }
+
 
   @GetMapping("/{type}/{symbol}/{date}")
   public ResponseEntity getAggregateData(
