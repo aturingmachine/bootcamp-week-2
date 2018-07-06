@@ -49,14 +49,10 @@ public class StockDataRepository {
       " companyId from stocks " +
       "where companyId = '[ID]' and date like '[DATE]%'";
 
-  private final String COMPILE_MONTH = "SELECT MAX(price), MIN(price), SUM(volume)," +
-      " (select price from stocks where companyId = '[ID]'" +
-      " and date = (select max(date) from stocks where date like '%-[DATE]-%')) as CLOSE_PRICE," +
-      " companyId from stocks " +
-      "where companyId = '[ID]' and date like '%-[DATE]-%'";
+  public StockDataRepository(JdbcTemplate template,
+      StockDataService stockDataService,
+      CompanyRepository companyRepository) {
 
-
-  public StockDataRepository(JdbcTemplate template, StockDataService stockDataService, CompanyRepository companyRepository) {
     this.template = template;
     this.stockDataService = stockDataService;
     this.companyRepository = companyRepository;
@@ -85,27 +81,15 @@ public class StockDataRepository {
     return template.query(GET_ALL, stockDataRowMapper);
   }
 
-  public AggregateData compileDataDate(String symbol, String date) throws EmptyResultDataAccessException, NullPointerException {
-    int companyId = companyRepository.getCompanyBySymbol(symbol).getId();
-
-    String queryString = COMPILE_DATE.replace("[ID]", Integer.toString(companyId)).replace("[DATE]", date);
-
-    return template.queryForObject(queryString, aggregateDataRowMapper);
-
-  }
-
-  public AggregateData compileDataMonth(String symbol, String date) throws EmptyResultDataAccessException, NullPointerException {
-    //If the user passed us a single character make sure the query will work
-    if (date.length() != 2) {
-      date = "0" + date;
-    }
+  public AggregateData compileDataDate(String symbol, String date)
+      throws EmptyResultDataAccessException, NullPointerException {
 
     int companyId = companyRepository.getCompanyBySymbol(symbol).getId();
 
-    String queryString = COMPILE_MONTH.replace("[ID]", Integer.toString(companyId)).replace("[DATE]", date);
-
-    System.out.println(queryString);
+    String queryString = COMPILE_DATE.replace("[ID]",
+        Integer.toString(companyId)).replace("[DATE]", date);
 
     return template.queryForObject(queryString, aggregateDataRowMapper);
+
   }
 }

@@ -42,7 +42,9 @@ public class StockDataController {
 
   @GetMapping("/{type}/{symbol}/{date}")
   public ResponseEntity getAggregateData(
-      @PathVariable("type") String type, @PathVariable("symbol") String symbol, @PathVariable("date") String date) {
+      @PathVariable("type") String type,
+      @PathVariable("symbol") String symbol,
+      @PathVariable("date") String date) {
 
     AggregateData data;
 
@@ -50,12 +52,12 @@ public class StockDataController {
       if (type.equals("date")) {
         data = stockDataRepository.compileDataDate(symbol, date);
       } else if (type.equals("month")) {
-
         if (Integer.parseInt(date) > 12 || Integer.parseInt(date) < 1) {
           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
               .body("Month out of scope, month must be < 13 && > 0");
+        } else {
         }
-        data = stockDataRepository.compileDataMonth(symbol, date);
+        data = stockDataRepository.compileDataDate(symbol, formatDate(date));
       } else {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body("Aggregation Format Unsupported, try month or date");
@@ -70,5 +72,15 @@ public class StockDataController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body("Data could not be found for the specified company and date");
     }
+  }
+
+  private String formatDate(String date) {
+    if (date.length() < 2) {
+      date = "0" + date;
+    }
+
+    date = "%-" + date + "-";
+
+    return date;
   }
 }
