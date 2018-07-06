@@ -3,7 +3,6 @@ package solstice.bootcamp.stocksapi.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.internal.ir.ObjectNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import solstice.bootcamp.stocksapi.model.Company;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
