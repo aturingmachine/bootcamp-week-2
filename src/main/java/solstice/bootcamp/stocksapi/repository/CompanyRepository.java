@@ -33,9 +33,7 @@ public class CompanyRepository {
   public void save(HashSet<Company> companies) {
 
     companies.forEach(company -> {
-      if (getCompanyBySymbol(company.getSymbol()) == null) {
         template.update(INSERT, company.getSymbol());
-      }
     });
   }
 

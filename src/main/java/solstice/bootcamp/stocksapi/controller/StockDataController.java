@@ -1,6 +1,6 @@
 package solstice.bootcamp.stocksapi.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,6 @@ import java.io.IOException;
 public class StockDataController {
   private final StockDataRepository stockDataRepository;
 
-  @Autowired
   public StockDataController(StockDataRepository stockDataRepository) {
     this.stockDataRepository = stockDataRepository;
   }
