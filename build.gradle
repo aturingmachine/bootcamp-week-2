@@ -31,3 +31,7 @@ dependencies {
     runtime "javax.xml.bind:jaxb-api"
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+bootRun {
+    jvmArgs = ["-Dspring.output.ansi.enabled=ALWAYS"]
+}
