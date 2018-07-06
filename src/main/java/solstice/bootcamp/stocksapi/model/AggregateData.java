@@ -18,6 +18,14 @@ public class AggregateData {
         this.closePrice = closePrice;
     }
 
+    public AggregateData(float highestPrice, float lowestPrice, int totalVolume, float closePrice, String symbol) {
+        this.highestPrice = highestPrice;
+        this.lowestPrice = lowestPrice;
+        this.totalVolume = totalVolume;
+        this.closePrice = closePrice;
+        this.symbol = symbol;
+    }
+
     public AggregateData() {}
 
     public float getHighestPrice() {

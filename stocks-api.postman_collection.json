@@ -231,6 +231,19 @@
 				"description": "Should load the data from the remote into the db."
 			},
 			"response": []
+		},
+		{
+			"name": "GET No Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				},
+				"description": "Check to make sure errors are handled for requests against an empty DB"
+			},
+			"response": []
 		}
 	]
 }
