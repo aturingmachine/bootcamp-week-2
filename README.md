@@ -20,6 +20,10 @@ This route will read the data from the remote URL stored in the `stocks.remote.u
 
 The `stocks` and `companies` tables will be filled with data from this request.
 
+#### `GET /stocks`
+
+This will return the full array of stock data with nested company object references.
+
 #### `GET /stocks/{type}/{symbol}/{date}`
 
 This route will generate data for a given stock symbol. The path variable `type` is used to determine what kind of data 
