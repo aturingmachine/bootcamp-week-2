@@ -10,8 +10,6 @@ import solstice.bootcamp.stocksapi.model.Company;
 import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 public class CompanyRepository {
