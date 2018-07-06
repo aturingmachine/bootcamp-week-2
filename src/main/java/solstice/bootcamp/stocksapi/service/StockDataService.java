@@ -16,29 +16,31 @@ import java.util.List;
 @Service
 public class StockDataService {
 
-    @Value("${stocks.remote.url}")
-    private String dataSource;
+  @Value("${stocks.remote.url}")
+  private String dataSource;
 
-    public StockDataService() {}
+  public StockDataService() {
+  }
 
-    public List<StockData> mapJSON() throws IOException {
-        URL url = new URL(dataSource);
-        URLConnection conn = url.openConnection();
+  public List<StockData> mapJSON() throws IOException {
+    URL url = new URL(dataSource);
+    URLConnection conn = url.openConnection();
 
-        ObjectMapper mapper = new ObjectMapper(); //New up a Jackson Object Mapper
-        List<StockData> data = mapper.readValue(conn.getInputStream(), new TypeReference<List<StockData>>() {
-        });
+    ObjectMapper mapper = new ObjectMapper(); //New up a Jackson Object Mapper
+    List<StockData> data = mapper.readValue(conn.getInputStream(), new TypeReference<List<StockData>>() {
+    });
 
-        return data;
-    }
+    return data;
+  }
 
-    public HashSet<Company> getCompanies() throws IOException {
-        URL url = new URL(dataSource);
-        URLConnection conn = url.openConnection();
+  public HashSet<Company> getCompanies() throws IOException {
+    URL url = new URL(dataSource);
+    URLConnection conn = url.openConnection();
 
-        ObjectMapper mapper = new ObjectMapper();
-        HashSet<Company> data = mapper.readValue(conn.getInputStream(), new TypeReference<HashSet<Company>>(){});
+    ObjectMapper mapper = new ObjectMapper();
+    HashSet<Company> data = mapper.readValue(conn.getInputStream(), new TypeReference<HashSet<Company>>() {
+    });
 
-        return data;
-    }
+    return data;
+  }
 }

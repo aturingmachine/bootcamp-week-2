@@ -11,38 +11,39 @@ import javax.persistence.OneToMany;
 @JsonIgnoreProperties({"price", "volume", "date"})
 public class Company {
 
-    @JsonIgnore
-    @Id
-    @GeneratedValue
-    @OneToMany
-    @JoinColumn(name = "companyId")
-    private int id;
-    private String symbol;
+  @JsonIgnore
+  @Id
+  @GeneratedValue
+  @OneToMany
+  @JoinColumn(name = "companyId")
+  private int id;
+  private String symbol;
 
-    public Company(String symbol) {
-        this.symbol = symbol;
-    }
+  public Company(String symbol) {
+    this.symbol = symbol;
+  }
 
-    public Company(int id, String symbol) {
-        this.id = id;
-        this.symbol = symbol;
-    }
+  public Company(int id, String symbol) {
+    this.id = id;
+    this.symbol = symbol;
+  }
 
-    public Company() {}
+  public Company() {
+  }
 
-    public int getId() {
-        return id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getSymbol() {
-        return symbol;
-    }
+  public String getSymbol() {
+    return symbol;
+  }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+  public void setSymbol(String symbol) {
+    this.symbol = symbol;
+  }
 }
