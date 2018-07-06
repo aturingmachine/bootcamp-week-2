@@ -53,16 +53,11 @@ public class StockDataController {
       data.setType(type);
       data.setDateRequested(date);
 
-      return new ResponseEntity<>(data, HttpStatus.OK);
+      return new ResponseEntity(data, HttpStatus.OK);
 
-    } catch (EmptyResultDataAccessException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .body("Data could not be found for the specified company and date");
-    } catch (NullPointerException e) {
+    } catch (EmptyResultDataAccessException | NullPointerException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body("Data could not be found for the specified company and date");
     }
-
-
   }
 }

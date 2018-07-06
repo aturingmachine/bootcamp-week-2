@@ -234,12 +234,40 @@
 		},
 		{
 			"name": "GET No Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c212c93-3287-451b-8e7d-c5b06537b9aa",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check Error Code\", function() {",
+							"    pm.response.to.have.status(404)",
+							"})",
+							"",
+							"pm.test(\"Check Erorr Message\", function() {",
+							"    pm.response.to.have.body(\"Data could not be found for the specified company and date\")",
+							"})"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": ""
+					"raw": "localhost:8080/stocks/date/GOOG/2018-06-22",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"date",
+						"GOOG",
+						"2018-06-22"
+					]
 				},
 				"description": "Check to make sure errors are handled for requests against an empty DB"
 			},
