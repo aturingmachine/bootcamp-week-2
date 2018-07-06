@@ -52,11 +52,12 @@ public class StockDataController {
       if (type.equals("date")) {
         data = stockDataRepository.compileDataDate(symbol, date);
       } else if (type.equals("month")) {
+
         if (Integer.parseInt(date) > 12 || Integer.parseInt(date) < 1) {
           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
               .body("Month out of scope, month must be < 13 && > 0");
-        } else {
         }
+
         data = stockDataRepository.compileDataDate(symbol, formatDate(date));
       } else {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -66,7 +67,7 @@ public class StockDataController {
       data.setType(type);
       data.setDateRequested(date);
 
-      return new ResponseEntity(data, HttpStatus.OK);
+      return new ResponseEntity<>(data, HttpStatus.OK);
 
     } catch (EmptyResultDataAccessException | NullPointerException e) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
