@@ -55,7 +55,7 @@ The following is an example response:
     "type": "date",
     "symbol": "GOOG",
     "dateRequested": "2018-06-22"
-}}
+}
 ```
 
 ### Testing 
