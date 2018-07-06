@@ -14,13 +14,6 @@ public class StockDataRepository {
 
     private final JdbcTemplate template;
 
-    private final RowMapper<StockData> stockDataRowMapper = (ResultSet rs, int row) -> new StockData(
-            rs.getString("symbol"),
-            rs.getFloat("price"),
-            rs.getInt("volume"),
-            rs.getTimestamp("date")
-    );
-
     private final RowMapper<AggregateData> aggregateDataRowMapper = (ResultSet rs, int row) -> new AggregateData(
             rs.getFloat(1),
             rs.getFloat(2),

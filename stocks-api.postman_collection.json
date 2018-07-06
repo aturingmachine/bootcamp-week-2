@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "ad1765d3-2066-4ae2-86e9-b01074d25389",
+		"name": "stocks-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Aggregate MONTH Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2249a162-b534-4fb8-9b8f-8bdda9fa59c6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check Error Code\", function() {",
+							"    pm.response.to.have.status(400)",
+							"})",
+							"",
+							"pm.test(\"Check Erorr Message\", function() {",
+							"    pm.response.to.have.body(\"Month out of scope, month must be < 13 && > 0\")",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/stocks/month/GOOG/13",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"month",
+						"GOOG",
+						"13"
+					]
+				},
+				"description": "Should use an out of scope month number and check the error response is proper."
+			},
+			"response": []
+		},
+		{
+			"name": "GET Aggregate FORMAT Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12bd3348-8207-480f-95a3-173ccf97be7f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Check Error Code\", function() {",
+							"    pm.response.to.have.status(400)",
+							"})",
+							"",
+							"pm.test(\"Check Erorr Message\", function() {",
+							"    pm.response.to.have.body(\"Aggregation Format Unsupported, try month or date\")",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/stocks/year/GOOG/2016-06-26",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"year",
+						"GOOG",
+						"2016-06-26"
+					]
+				},
+				"description": "Should pass in an unsupported aggregate type to test the error response"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Aggregate DATE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1dcd6c5d-3569-452f-9d1c-c67df44d1fe3",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is OK\", function () {",
+							"    pm.response.to.have.status(200) ",
+							"});",
+							"",
+							"pm.test(\"Response Format is JSON\", function () {",
+							"    pm.response.to.not.be.error; ",
+							"    pm.response.to.have.jsonBody(\"\"); ",
+							"    pm.response.to.not.have.jsonBody(\"error\");  ",
+							"});",
+							"",
+							"pm.test(\"Check Return Data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.highestPrice).to.eql(1130.99);",
+							"    pm.expect(jsonData.lowestPrice).to.eql(1120.01);",
+							"    pm.expect(jsonData.totalVolume).to.eql(724223);",
+							"    pm.expect(jsonData.closePrice).to.eql(1122.57);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/stocks/date/GOOG/2018-06-22",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"date",
+						"GOOG",
+						"2018-06-22"
+					]
+				},
+				"description": "Should return aggregated data for the symbol, on the given date"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Aggregate MONTH",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bf017d4f-e96c-49d6-9fe5-223f1296ff4d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is OK\", function () {",
+							"    pm.response.to.have.status(200) ",
+							"});",
+							"",
+							"pm.test(\"Response Format is JSON\", function () {",
+							"    pm.response.to.not.be.error; ",
+							"    pm.response.to.have.jsonBody(\"\"); ",
+							"    pm.response.to.not.have.jsonBody(\"error\");  ",
+							"});",
+							"",
+							"pm.test(\"Check Return Data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.highestPrice).to.eql(1130.99);",
+							"    pm.expect(jsonData.lowestPrice).to.eql(1120);",
+							"    pm.expect(jsonData.totalVolume).to.eql(2159363);",
+							"    pm.expect(jsonData.closePrice).to.eql(1129.65);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/stocks/month/GOOG/06",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"month",
+						"GOOG",
+						"06"
+					]
+				},
+				"description": "Should return aggregate data for a stock for the month provided."
+			},
+			"response": []
+		},
+		{
+			"name": "POST DB Load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86a03280-1190-4574-8a31-e70e5ae96464",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Data Load Successful\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Data Is JSON\", function () {",
+							"    pm.response.to.not.be.error; ",
+							"    pm.response.to.have.jsonBody(\"\"); ",
+							"    pm.response.to.not.have.jsonBody(\"error\");  ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:8080/stocks/load",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stocks",
+						"load"
+					]
+				},
+				"description": "Should load the data from the remote into the db."
+			},
+			"response": []
+		}
+	]
+}
